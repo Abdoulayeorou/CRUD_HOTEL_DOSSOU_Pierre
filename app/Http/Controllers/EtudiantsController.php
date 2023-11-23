@@ -29,7 +29,7 @@ class EtudiantsController extends Controller
         $etudiant->prenom = $request->prenom;
         $etudiant->classe = $request->classe;
         $etudiant->save();
-        return redirect('/ajouter')->with('status','L\'étudiant a bien été ajouté succes.');  
+        return redirect('/ajouter')->with('status','L\'étudiant a bien été ajouté succes.');
     }
 
     public function update_etudiant($id){
@@ -49,16 +49,23 @@ class EtudiantsController extends Controller
         $etudiant->prenom = $request->prenom;
         $etudiant->classe = $request->classe;
         $etudiant->update();
-        
-        return redirect('/etudiant')->with('status','L\'étudiant a bien été modifié succes.');  
+
+        return redirect('/etudiant')->with('status','L\'étudiant a bien été modifié succes.');
     }
 
-      public function delete_etudiant($id){
-        $etudiant = Etudiants::find($id);
-        $etudiant ->delete();
+      public function delete_etudiant($id)
+{
+    $etudiant = Etudiants::find($id);
 
-        return redirect('/etudiant')->with('status','L\'étudiant a bien été supprimeé succes.'); 
-      }
+    if (!$etudiant) {
+        return redirect('/etudiant')->with('error', 'Étudiant non trouvé.');
+    }
+
+    $etudiant->delete();
+
+    return redirect('/etudiant')->with('status', 'L\'étudiant a bien été supprimé avec succès.');
+}
+
     /**
      * Display a listing of the resource.
      */
